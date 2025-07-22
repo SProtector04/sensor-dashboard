@@ -10,7 +10,12 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 // MQTT Topics a suscribirse (pueden ser más)
-const TOPICS = ["sala1/temperature", "sala2/temperature"];
+const TOPICS = [
+  "sensor/proximidad",
+  "sensor/nivel",
+  "motor/temperatura",
+  "motor/uso",
+];
 
 initMqtt(TOPICS, (topic, message) => {
   const payload = message.toString();

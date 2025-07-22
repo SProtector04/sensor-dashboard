@@ -1,0 +1,11 @@
+1753207690: mosquitto version 2.0.22 starting
+1753207690: Config loaded from /mosquitto/config/mosquitto.conf.
+1753207690: Opening ipv4 listen socket on port 1883.
+1753207690: Opening ipv6 listen socket on port 1883.
+1753207690: Opening websockets listen socket on port 9001.
+1753207690: mosquitto version 2.0.22 running
+1753207695: New connection from 172.20.0.4:45492 on port 1883.
+1753207695: New client connected from 172.20.0.4:45492 as mqttjs_749db6a4 (p2, c1, k60).
+1753209491: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1753211291: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1753213092: Saving in-memory database to /mosquitto/data//mosquitto.db.
