@@ -19,10 +19,12 @@ const TOPICS = [
 
 initMqtt(TOPICS, (topic, message) => {
   const payload = message.toString();
-  const value = parseFloat(payload);
-  if (isNaN(value)) return;
+  const rawValue = parseFloat(payload);
+  const value = rawValue === 0 ? null : rawValue;
 
-  const room = topic.split("/")[0];
+  if (value === null || isNaN(value)) return;
+
+  const room = topic.split("/")[1];
   writeTemperature(room, value);
 
   const data = {

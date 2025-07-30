@@ -1,48 +1,57 @@
-// src/components/SensorChart.jsx
-import { useRef, useEffect } from "react";
-import { createChart } from "lightweight-charts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
+} from "recharts";
 
-const SensorChart = ({ data, title }) => {
-  const chartContainerRef = useRef();
-
-  useEffect(() => {
-    const chart = createChart(chartContainerRef.current, {
-      width: chartContainerRef.current.clientWidth,
-      height: 300,
-      layout: {
-        background: { color: "#fff" },
-        textColor: "#333",
-      },
-      grid: {
-        vertLines: { color: "#eee" },
-        horzLines: { color: "#eee" },
-      },
-      timeScale: {
-        timeVisible: true,
-        secondsVisible: true,
-      },
-    });
-
-    const lineSeries = chart.addLineSeries();
-    lineSeries.setData(data);
-
-    const handleResize = () => {
-      chart.applyOptions({ width: chartContainerRef.current.clientWidth });
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      chart.remove();
-    };
-  }, [data]);
+export default function SensorChart({
+  data,
+  title,
+  color,
+  width = "100%",
+  height = 300,
+}) {
+  // Formatear el eje X como hora legible si el dato es timestamp
+  const formatTime = (unix) => {
+    if (!unix) return "";
+    const d = new Date(unix * 1000);
+    return d.toLocaleTimeString();
+  };
 
   return (
-    <div>
-      <h3>{title}</h3>
-      <div ref={chartContainerRef} style={{ width: "100%" }} />
+    <div
+      style={{
+        width: width === "100%" ? "100%" : `${width}px`,
+        marginBottom: "20px",
+      }}
+    >
+      <h3 style={{ marginBottom: "10px", textAlign: "center" }}>{title}</h3>
+      <ResponsiveContainer width={width} height={height}>
+        <LineChart
+          data={data}
+          margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="time" tickFormatter={formatTime} />
+          <YAxis domain={["auto", "auto"]} unit="°C" />
+          <Tooltip
+            labelFormatter={formatTime}
+            formatter={(value) => `${value}°C`}
+          />
+          <Line
+            type="monotone"
+            dataKey="value"
+            stroke={color || "#2962FF"}
+            strokeWidth={2}
+            dot={false}
+            isAnimationActive={false}
+          />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
-};
-
-export default SensorChart;
+}
