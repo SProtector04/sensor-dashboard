@@ -1,0 +1,1 @@
+mosquitto_pub -h localhost -t "sensor/proximidad" -m "20"

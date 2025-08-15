@@ -1,9 +1,24 @@
 import { useState, useEffect, useRef } from "react";
 import SensorChart from "../components/SensorChart";
-import { createWSClient } from "../utils/wsClient";
+import { createWSClient } from "../services/wsClient";
+import { FaThermometerHalf, FaTachometerAlt, FaWater, FaRulerVertical } from "react-icons/fa";
 
-function Dashboard() {
-  const [sensorData, setSensorData] = useState({});
+const SENSOR_ICONS = {
+  proximidad: <FaRulerVertical size={24} className="text-blue-500" />,
+  nivel: <FaWater size={24} className="text-cyan-500" />,
+  temperatura: <FaThermometerHalf size={24} className="text-red-500" />,
+  uso: <FaTachometerAlt size={24} className="text-green-500" />,
+};
+
+
+const ROOMS = ["proximidad", "nivel", "temperatura", "uso"];
+
+export default function Dashboard() {
+  const [sensorData, setSensorData] = useState(() => {
+    const initial = {};
+    ROOMS.forEach((room) => (initial[room] = []));
+    return initial;
+  });
   const wsRef = useRef(null);
 
   useEffect(() => {
@@ -13,7 +28,6 @@ function Dashboard() {
       onMessage: (event) => {
         try {
           const data = JSON.parse(event.data);
-          console.log("Dato recibido:", data);
           const { room, time, value } = data;
 
           setSensorData((prev) => {
@@ -42,41 +56,42 @@ function Dashboard() {
   }, []);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2 style={{ textAlign: "center", marginBottom: "30px" }}>
-        Panel de Sensores en Tiempo Real
+    <div className="p-6 bg-gray-50 min-h-screen">
+      <h2 className="text-3xl font-extrabold text-center mb-10 text-blue-700">
+        Real-Time Sensor Dashboard
       </h2>
 
-      {Object.keys(sensorData).length === 0 ? (
-        <p style={{ textAlign: "center" }}>Esperando datos en tiempo real...</p>
-      ) : (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, minmax(350px, 1fr))",
-            gap: "10px",
-          }}
-        >
-          {Object.entries(sensorData).map(([room, data]) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {Object.keys(sensorData).map((room) => {
+          const data = sensorData[room] || [];
+          const lastValue = data.length ? data[data.length - 1].value : "--";
+
+          return (
             <div
               key={room}
-              style={{
-                borderRadius: "8px",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-                padding: "15px",
-              }}
+              className={`rounded-xl shadow-lg bg-white p-6 border border-gray-100 hover:shadow-2xl transition-shadow duration-300`}
             >
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  {SENSOR_ICONS[room]}
+                  <h3 className="text-xl font-semibold text-gray-800">{room.toUpperCase()}</h3>
+                </div>
+                <span className="px-3 py-1 text-sm font-medium bg-gray-200 rounded-full text-gray-700">
+                  {lastValue}
+                </span>
+              </div>
+
               <SensorChart
                 data={data}
                 title={`Sensor: ${room}`}
                 color={getSensorColor(room)}
                 width="100%"
-                height={200}
+                height={220}
               />
             </div>
-          ))}
-        </div>
-      )}
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -91,5 +106,3 @@ function getSensorColor(room) {
   };
   return colors[room] || colors.default;
 }
-
-export default Dashboard;

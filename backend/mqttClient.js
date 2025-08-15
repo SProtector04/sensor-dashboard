@@ -4,7 +4,7 @@ function initMqtt(topics, onMessage) {
   const mqttClient = mqtt.connect(process.env.MQTT_BROKER_URL);
 
   mqttClient.on("connect", () => {
-    console.log("Conectado al broker MQTT");
+    console.log("Conectado al broker MQTT", process.env.MQTT_BROKER_URL);
     mqttClient.subscribe(topics, (err) => {
       if (err) {
         console.error("Error al suscribirse a topics:", err);
@@ -14,9 +14,12 @@ function initMqtt(topics, onMessage) {
     });
   });
 
+
   mqttClient.on("message", (topic, message) => {
     onMessage(topic, message);
   });
+
+  
 
   return mqttClient;
 }

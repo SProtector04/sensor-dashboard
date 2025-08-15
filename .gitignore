@@ -22,3 +22,6 @@ simulation-mqtt/Cargo.lock # opcional si solo usás como binario
 # 🛠 Scripts temporales
 *.sh~
 dev.sh~
+
+.jar
+.puml

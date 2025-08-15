@@ -10,20 +10,20 @@ Este proyecto es un sistema completo de monitoreo de sensores IoT en tiempo real
 graph TD
     subgraph Sensores
         A[Dispositivo físico]
-        A -->|MQTT| B(Mosquitto Broker)
+        A -->|MQTT| MosquittoBroker
     end
 
     subgraph Backend
-        B --> C[Node.js API]
-        C --> D[InfluxDB]
+    MosquittoBroker -->|MQTT| C[Node.js API]
+    C --> D[InfluxDB]
     end
 
     subgraph Frontend
         C -->|WebSocket| E[React Dashboard]
     end
 
-    subgraph Simulación
-        F[simulation-mqtt (Rust)] -->|MQTT| B
+    subgraph Simulación-Rust
+        F[simulation-mqtt] --> |MQTT| MosquittoBroker
     end
 ```
 

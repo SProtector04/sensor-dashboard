@@ -50,7 +50,7 @@ async fn main() {
                 println!("Publicando en {}: {}", topic, payload);
                 let _ = client.publish(&topic, QoS::AtLeastOnce, false, payload.clone());
 
-                sleep(Duration::from_millis(500)).await;
+                sleep(Duration::from_millis(5000)).await;
             }
         });
 

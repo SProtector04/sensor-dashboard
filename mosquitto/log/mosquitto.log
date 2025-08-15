@@ -273,3 +273,131 @@
 1753822006: Client mqttjs_9af43836 closed its connection.
 1753822006: mosquitto version 2.0.22 terminating
 1753822006: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1755192123: mosquitto version 2.0.22 starting
+1755192123: Config loaded from /mosquitto/config/mosquitto.conf.
+1755192123: Opening ipv4 listen socket on port 1883.
+1755192123: Opening ipv6 listen socket on port 1883.
+1755192123: Opening websockets listen socket on port 9001.
+1755192123: mosquitto version 2.0.22 running
+1755229015: mosquitto version 2.0.22 starting
+1755229015: Config loaded from /mosquitto/config/mosquitto.conf.
+1755229015: Opening ipv4 listen socket on port 1883.
+1755229015: Opening ipv6 listen socket on port 1883.
+1755229015: Opening websockets listen socket on port 9001.
+1755229015: mosquitto version 2.0.22 running
+1755229118: New connection from 172.18.0.1:36550 on port 1883.
+1755229118: New connection from 172.18.0.1:36564 on port 1883.
+1755229118: New client connected from 172.18.0.1:36550 as pub_motor_temperatura (p2, c1, k10).
+1755229118: New client connected from 172.18.0.1:36564 as pub_motor_uso (p2, c1, k10).
+1755229118: New connection from 172.18.0.1:36572 on port 1883.
+1755229118: New client connected from 172.18.0.1:36572 as pub_sensor_nivel (p2, c1, k10).
+1755229118: New connection from 172.18.0.1:36584 on port 1883.
+1755229118: New client connected from 172.18.0.1:36584 as pub_sensor_proximidad (p2, c1, k10).
+1755229802: New connection from ::1:56390 on port 1883.
+1755229802: New client connected from ::1:56390 as auto-898E0425-9348-7D04-01F3-8EA31AF19CF0 (p2, c1, k60).
+1755229802: Client auto-898E0425-9348-7D04-01F3-8EA31AF19CF0 disconnected.
+1755229827: New connection from ::1:58470 on port 1883.
+1755229827: New client connected from ::1:58470 as auto-298B30DC-8C65-9947-4917-9EC1113F7971 (p2, c1, k60).
+1755229827: Client auto-298B30DC-8C65-9947-4917-9EC1113F7971 disconnected.
+1755229989: New connection from ::1:35674 on port 1883.
+1755229989: New client connected from ::1:35674 as auto-85EC7EE9-90E7-2376-F108-3D4474944D8F (p2, c1, k60).
+1755230327: mosquitto version 2.0.22 terminating
+1755230327: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1755230346: mosquitto version 2.0.22 starting
+1755230346: Config loaded from /mosquitto/config/mosquitto.conf.
+1755230346: Opening ipv4 listen socket on port 1883.
+1755230346: Opening ipv6 listen socket on port 1883.
+1755230346: Opening websockets listen socket on port 9001.
+1755230346: mosquitto version 2.0.22 running
+1755230346: New connection from 172.18.0.1:56570 on port 1883.
+1755230346: New connection from 172.18.0.1:56608 on port 1883.
+1755230346: New connection from 172.18.0.1:56572 on port 1883.
+1755230346: New connection from 172.18.0.1:56568 on port 1883.
+1755230346: New client connected from 172.18.0.1:56570 as pub_sensor_proximidad (p2, c1, k10).
+1755230346: New client connected from 172.18.0.1:56608 as pub_motor_temperatura (p2, c1, k10).
+1755230346: New client connected from 172.18.0.1:56572 as pub_sensor_nivel (p2, c1, k10).
+1755230346: New client connected from 172.18.0.1:56568 as pub_motor_uso (p2, c1, k10).
+1755230400: mosquitto version 2.0.22 terminating
+1755230400: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1755230441: mosquitto version 2.0.22 starting
+1755230441: Config loaded from /mosquitto/config/mosquitto.conf.
+1755230441: Opening ipv4 listen socket on port 1883.
+1755230441: Opening ipv6 listen socket on port 1883.
+1755230441: Opening websockets listen socket on port 9001.
+1755230441: mosquitto version 2.0.22 running
+1755230441: New connection from 172.18.0.1:54242 on port 1883.
+1755230441: New connection from 172.18.0.1:54246 on port 1883.
+1755230441: New connection from 172.18.0.1:54226 on port 1883.
+1755230441: New connection from 172.18.0.1:54224 on port 1883.
+1755230441: New client connected from 172.18.0.1:54242 as pub_sensor_nivel (p2, c1, k10).
+1755230441: New client connected from 172.18.0.1:54246 as pub_sensor_proximidad (p2, c1, k10).
+1755230441: New client connected from 172.18.0.1:54226 as pub_motor_uso (p2, c1, k10).
+1755230441: New client connected from 172.18.0.1:54224 as pub_motor_temperatura (p2, c1, k10).
+1755230469: New connection from 172.18.0.1:55112 on port 1883.
+1755230469: Client <unknown> closed its connection.
+1755230469: New connection from 172.18.0.1:34558 on port 1883.
+1755230469: Client <unknown> closed its connection.
+1755231037: New connection from 172.18.0.4:48520 on port 1883.
+1755231037: New client connected from 172.18.0.4:48520 as mqttjs_c4b9bc4e (p2, c1, k60).
+1755231237: Client pub_sensor_nivel closed its connection.
+1755231237: Client pub_motor_uso closed its connection.
+1755231237: Client pub_motor_temperatura closed its connection.
+1755231237: Client pub_sensor_proximidad closed its connection.
+1755231247: New connection from 172.18.0.1:55662 on port 1883.
+1755231247: New connection from 172.18.0.1:55666 on port 1883.
+1755231247: New connection from 172.18.0.1:55676 on port 1883.
+1755231247: New client connected from 172.18.0.1:55662 as pub_motor_uso (p2, c1, k10).
+1755231247: New client connected from 172.18.0.1:55666 as pub_sensor_proximidad (p2, c1, k10).
+1755231247: New client connected from 172.18.0.1:55676 as pub_motor_temperatura (p2, c1, k10).
+1755231247: New connection from 172.18.0.1:55680 on port 1883.
+1755231247: New client connected from 172.18.0.1:55680 as pub_sensor_nivel (p2, c1, k10).
+1755231476: Client pub_sensor_proximidad closed its connection.
+1755231476: Client pub_sensor_nivel closed its connection.
+1755231476: Client pub_motor_uso closed its connection.
+1755231476: Client pub_motor_temperatura closed its connection.
+1755231480: New connection from 172.18.0.1:34268 on port 1883.
+1755231480: New connection from 172.18.0.1:34276 on port 1883.
+1755231480: New client connected from 172.18.0.1:34268 as pub_sensor_nivel (p2, c1, k10).
+1755231480: New client connected from 172.18.0.1:34276 as pub_sensor_proximidad (p2, c1, k10).
+1755231480: New connection from 172.18.0.1:34278 on port 1883.
+1755231480: New client connected from 172.18.0.1:34278 as pub_motor_uso (p2, c1, k10).
+1755231480: New connection from 172.18.0.1:34290 on port 1883.
+1755231480: New client connected from 172.18.0.1:34290 as pub_motor_temperatura (p2, c1, k10).
+1755232941: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1755233265: Client mqttjs_c4b9bc4e closed its connection.
+1755233276: New connection from 172.18.0.4:39484 on port 1883.
+1755233276: New client connected from 172.18.0.4:39484 as mqttjs_a52c9616 (p2, c1, k60).
+1755233813: Client mqttjs_a52c9616 closed its connection.
+1755233828: New connection from 172.18.0.4:56862 on port 1883.
+1755233828: New client connected from 172.18.0.4:56862 as mqttjs_c8ac2a78 (p2, c1, k60).
+1755233934: Client mqttjs_c8ac2a78 closed its connection.
+1755233948: New connection from 172.18.0.4:58502 on port 1883.
+1755233948: New client connected from 172.18.0.4:58502 as mqttjs_8a0ec249 (p2, c1, k60).
+1755234004: Client mqttjs_8a0ec249 closed its connection.
+1755234017: New connection from 172.18.0.4:53644 on port 1883.
+1755234017: New client connected from 172.18.0.4:53644 as mqttjs_dbee99f9 (p2, c1, k60).
+1755234857: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1755235687: Client pub_motor_uso closed its connection.
+1755235687: Client pub_sensor_nivel closed its connection.
+1755235687: Client pub_sensor_proximidad closed its connection.
+1755235687: Client pub_motor_temperatura closed its connection.
+1755235883: mosquitto version 2.0.22 starting
+1755235883: Config loaded from /mosquitto/config/mosquitto.conf.
+1755235883: Opening ipv4 listen socket on port 1883.
+1755235883: Opening ipv6 listen socket on port 1883.
+1755235883: Opening websockets listen socket on port 9001.
+1755235883: mosquitto version 2.0.22 running
+1755235897: New connection from 172.18.0.4:49484 on port 1883.
+1755235897: New client connected from 172.18.0.4:49484 as mqttjs_18b8498e (p2, c1, k60).
+1755235924: New connection from 172.18.0.1:40538 on port 1883.
+1755235924: New client connected from 172.18.0.1:40538 as pub_motor_temperatura (p2, c1, k10).
+1755235924: New connection from 172.18.0.1:40546 on port 1883.
+1755235924: New client connected from 172.18.0.1:40546 as pub_motor_uso (p2, c1, k10).
+1755235924: New connection from 172.18.0.1:40560 on port 1883.
+1755235924: New client connected from 172.18.0.1:40560 as pub_sensor_proximidad (p2, c1, k10).
+1755235924: New connection from 172.18.0.1:40570 on port 1883.
+1755235924: New client connected from 172.18.0.1:40570 as pub_sensor_nivel (p2, c1, k10).
+1755237249: Client pub_motor_temperatura closed its connection.
+1755237249: Client pub_sensor_proximidad closed its connection.
+1755237249: Client pub_motor_uso closed its connection.
+1755237249: Client pub_sensor_nivel closed its connection.
