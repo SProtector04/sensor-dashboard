@@ -1,1 +1,20 @@
-@import "tailwindcss"
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #1E40AF;     /* Azul profundo, navbar / botones */
+    --color-secondary: #2563EB;   /* Azul brillante, hover / acentos */
+    --color-background: #F8F9FA;  /* Fondo general del dashboard */
+    --color-text: #111827;        /* Texto general */
+    --color-sensor-proximidad: #8C0060;
+    --color-sensor-proximidad-light: #D98CBF;
+
+    --color-sensor-nivel: #005D80;
+    --color-sensor-nivel-light: #66B5CC;
+
+    --color-sensor-temperatura: #FF9149;
+    --color-sensor-temperatura-light: #FFD1B0;
+
+    --color-sensor-uso: #4CAF50;
+    --color-sensor-uso-light: #A8E6A9;
+
+}

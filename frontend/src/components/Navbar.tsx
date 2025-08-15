@@ -1,38 +1,47 @@
 import React, { useState } from "react";
-import NavIcon from "./NavIcon";
 import MegaMenu from "./MegaMenu";
-import { FaHome, FaChartBar, FaCog } from "react-icons/fa";
+import {
+  FaBars,
+  FaHome,
+  FaChartBar,
+  FaCog,
+  FaBell,
+  FaRobot,
+} from "react-icons/fa";
 
 const NAV_ITEMS = [
-  { icon: <FaHome />, label: "Dashboard", path: "/" },
-  { icon: <FaChartBar />, label: "Analytics", path: "/analytics" },
-  { icon: <FaCog />, label: "Settings", path: "/settings" },
+  { label: "Inicio", icon: <FaHome />, path: "/" },
+  { label: "Estadísticas", icon: <FaChartBar />, path: "/stats" },
+  { label: "Sensores", icon: <FaRobot />, path: "/sensors" },
+  { label: "Alertas", icon: <FaBell />, path: "/alerts" },
+  { label: "Configuración", icon: <FaCog />, path: "/settings" },
 ];
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => setIsOpen((prev) => !prev);
-
   return (
-    <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-40">
+    <nav className="bg-gradient-to-r from-primary to-secondary shadow-md fixed top-0 left-0 w-full z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Navbar izquierda */}
-          <div className="flex-shrink-0 font-bold text-xl text-blue-700">
+          {/* Logo / Título */}
+          <span className="font-extrabold text-2xl font-serif tracking-wide bg-gradient-to-r from-white via-accent to-gray-500 bg-clip-text text-transparent">
             IoT Dashboard
-          </div>
+          </span>
 
-          {/* Navbar derecha */}
-          <div className="flex items-center gap-4">
-            <NavIcon icon={<FaHome />} label="Dashboard" onClick={toggleMenu} />
-            <NavIcon icon={<FaChartBar />} label="Analytics" onClick={toggleMenu} />
-            <NavIcon icon={<FaCog />} label="Settings" onClick={toggleMenu} />
-          </div>
+          {/* Botón de menú */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="flex items-center gap-2 text-white hover:text-highlight p-2 rounded-lg transition-all duration-200 hover:scale-110 hover:bg-white/10 hover:cursor-pointer"
+            aria-label="Abrir menú"
+          >
+            <FaBars size={24} />
+            <span className="hidden sm:inline font-medium">Menú</span>
+          </button>
         </div>
       </div>
 
-      {/* Mega Menu */}
+      {/* Menú desplegable */}
       <MegaMenu isOpen={isOpen} routes={NAV_ITEMS} />
     </nav>
   );

@@ -4,12 +4,11 @@ import { createWSClient } from "../services/wsClient";
 import { FaThermometerHalf, FaTachometerAlt, FaWater, FaRulerVertical } from "react-icons/fa";
 
 const SENSOR_ICONS = {
-  proximidad: <FaRulerVertical size={24} className="text-blue-500" />,
-  nivel: <FaWater size={24} className="text-cyan-500" />,
-  temperatura: <FaThermometerHalf size={24} className="text-red-500" />,
-  uso: <FaTachometerAlt size={24} className="text-green-500" />,
+  proximidad: <FaRulerVertical size={24} className="text-sensor-proximidad" />,
+  nivel: <FaWater size={24} className="text-sensor-nivel" />,
+  temperatura: <FaThermometerHalf size={24} className="text-sensor-temperatura" />,
+  uso: <FaTachometerAlt size={24} className="text-sensor-uso" />,
 };
-
 
 const ROOMS = ["proximidad", "nivel", "temperatura", "uso"];
 
@@ -56,8 +55,8 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <h2 className="text-3xl font-extrabold text-center mb-10 text-blue-700">
+    <div className="p-6 bg-white min-h-screen">
+      <h2 className="text-3xl font-extrabold text-center mb-10 text-primary">
         Real-Time Sensor Dashboard
       </h2>
 
@@ -69,14 +68,17 @@ export default function Dashboard() {
           return (
             <div
               key={room}
-              className={`rounded-xl shadow-lg bg-white p-6 border border-gray-100 hover:shadow-2xl transition-shadow duration-300`}
+              style={{ borderColor: getSensorColor(room + "_light") }}
+              className="rounded-xl shadow-lg bg-white p-6 border-2 hover:shadow-2xl transition-shadow duration-300"
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                   {SENSOR_ICONS[room]}
-                  <h3 className="text-xl font-semibold text-gray-800">{room.toUpperCase()}</h3>
+                  <h3 className="text-xl font-semibold">{room.toUpperCase()}</h3>
                 </div>
-                <span className="px-3 py-1 text-sm font-medium bg-gray-200 rounded-full text-gray-700">
+                <span 
+                style={{ backgroundColor: getSensorColor(room + "_light") }}
+                className="px-3 py-1 text-sm font-medium rounded-full text-gray-700">
                   {lastValue}
                 </span>
               </div>
@@ -98,10 +100,14 @@ export default function Dashboard() {
 
 function getSensorColor(room) {
   const colors = {
-    proximidad: "#2962FF",
-    nivel: "#E15759",
-    temperatura: "#F28E2C",
+    proximidad: "#8C0060",      
+    proximidad_light: "#D98CBF",
+    nivel: "#005D80",           
+    nivel_light: "#66B5CC",
+    temperatura: "#FF9149",     
+    temperatura_light: "#FFD1B0",
     uso: "#4CAF50",
+    uso_light: "#A8E6A9",
     default: "#8884d8",
   };
   return colors[room] || colors.default;
