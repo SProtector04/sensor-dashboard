@@ -6,7 +6,7 @@ export default function MegaMenu({ isOpen, routes }) {
 
   return (
     <div className="absolute top-full left-0 w-full bg-white shadow-lg border-t border-blue-200 p-8 z-50 transition-all duration-300">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {routes.map(({ path, label, icon }) => (
           <Link
             key={path}

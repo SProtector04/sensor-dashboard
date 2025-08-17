@@ -1,4 +1,17 @@
 services:
+  postgres:
+      image: postgres:16
+      container_name: postgres_iot
+      restart: always
+      environment:
+        POSTGRES_USER: iotuser
+        POSTGRES_PASSWORD: iotpassword
+        POSTGRES_DB: iotdb
+      ports:
+        - "5432:5432"
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+        - ./init-db:/docker-entrypoint-initdb.d
   influxdb:
     image: influxdb:2.7
     ports:
@@ -52,3 +65,7 @@ services:
 
 volumes:
   influxdb_data:
+  postgres_data:
+
+  
+

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-    --color-primary: #1E40AF;     /* Azul profundo, navbar / botones */
+    --color-primary: #001973;     /* Azul profundo, navbar / botones */
     --color-secondary: #2563EB;   /* Azul brillante, hover / acentos */
     --color-background: #F8F9FA;  /* Fondo general del dashboard */
     --color-text: #111827;        /* Texto general */

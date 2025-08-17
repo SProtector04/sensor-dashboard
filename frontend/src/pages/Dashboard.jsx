@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import SensorChart from "../components/SensorChart";
 import { createWSClient } from "../services/wsClient";
-import { FaThermometerHalf, FaTachometerAlt, FaWater, FaRulerVertical } from "react-icons/fa";
+import { FaThermometerHalf, FaTachometerAlt, FaWater, FaRulerVertical, FaRobot } from "react-icons/fa";
 
 const SENSOR_ICONS = {
   proximidad: <FaRulerVertical size={24} className="text-sensor-proximidad" />,
@@ -56,44 +56,69 @@ export default function Dashboard() {
 
   return (
     <div className="p-6 bg-white min-h-screen">
-      <h2 className="text-3xl font-extrabold text-center mb-10 text-primary">
-        Real-Time Sensor Dashboard
-      </h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {Object.keys(sensorData).map((room) => {
-          const data = sensorData[room] || [];
-          const lastValue = data.length ? data[data.length - 1].value : "--";
-
-          return (
-            <div
-              key={room}
-              style={{ borderColor: getSensorColor(room + "_light") }}
-              className="rounded-xl shadow-lg bg-white p-6 border-2 hover:shadow-2xl transition-shadow duration-300"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  {SENSOR_ICONS[room]}
-                  <h3 className="text-xl font-semibold">{room.toUpperCase()}</h3>
-                </div>
-                <span 
-                style={{ backgroundColor: getSensorColor(room + "_light") }}
-                className="px-3 py-1 text-sm font-medium rounded-full text-gray-700">
-                  {lastValue}
-                </span>
-              </div>
-
-              <SensorChart
-                data={data}
-                title={`Sensor: ${room}`}
-                color={getSensorColor(room)}
-                width="100%"
-                height={220}
-              />
-            </div>
-          );
-        })}
+      <div className="mb-6">
+        <h1 className="text-4xl font-extrabold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent flex items-center gap-2">
+           Panel de Sensores
+        </h1>
+        <p className="text-gray-500 text-sm">
+          Monitoreo en tiempo real de todos los sensores activos en el sistema IoT.
+        </p>
       </div>
+
+      <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 col-span-3">
+          {Object.keys(sensorData).map((room) => {
+            const data = sensorData[room] || [];
+            const lastValue = data.length ? data[data.length - 1].value : "--";
+
+            return (
+              <div
+                key={room}
+                style={{ borderColor: getSensorColor(room + "_light") }}
+                className="rounded-xl shadow-lg bg-white p-6 border-2 hover:shadow-2xl transition-shadow duration-300"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    {SENSOR_ICONS[room]}
+                    <h3 className="text-xl font-semibold">{room.toUpperCase()}</h3>
+                  </div>
+                  <span 
+                  style={{ backgroundColor: getSensorColor(room + "_light") }}
+                  className="px-3 py-1 text-sm font-medium rounded-full text-gray-700">
+                    Ultimo valor {lastValue}
+                  </span>
+                </div>
+
+                <SensorChart
+                  data={data}
+                  title={`Sensor: ${room}`}
+                  color={getSensorColor(room)}
+                  width="100%"
+                  height={150}
+                />
+              </div>
+            );
+          })}
+        </div>
+        <div className="col-span-1 space-y-4">
+          <div className="bg-white shadow p-4 rounded-xl">
+            <h2 className="text-lg font-semibold">Resumen</h2>
+            <p className="text-sm text-gray-600">4 sensores activos</p>
+          </div>
+          <div className="bg-white shadow p-4 rounded-xl">
+            <h2 className="text-lg font-semibold">Tendencias</h2>
+            {/* Mini-gráfica */}
+          </div>
+          <div className="bg-white shadow p-4 rounded-xl">
+            <h2 className="text-lg font-semibold">Últimas alertas</h2>
+            <ul className="text-sm">
+              <li>Temperatura alta</li>
+              <li>Bajo nivel de agua</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
     </div>
   );
 }
