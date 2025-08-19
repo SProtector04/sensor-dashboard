@@ -40,9 +40,9 @@ async fn main() {
             loop {
                 let valor = match topic.as_str() {
                     "sensor/proximidad" => rand::rng().random_range(0.0..100.0), // cm
-                    "sensor/nivel" => rand::rng().random_range(0.0..1.0),         // porcentaje
-                    "motor/temperatura" => rand::rng().random_range(30.0..90.0), // °C
-                    "motor/uso" => rand::rng().random_range(0.0..1.0),           // 0: apagado, 1: encendido
+                    "sensor/nivel" => rand::rng().random_range(0.0..100.0),         // porcentaje
+                    "motor/temperatura" => rand::rng().random_range(30.0..120.0), // °C
+                    "motor/uso" => rand::rng().random_range(0.0..100.0),           // 0: apagado, 1: encendido
                     _ => 0.0,
                 };
 

@@ -1,139 +1,145 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import SensorChart from "../components/SensorChart";
 import { createWSClient } from "../services/wsClient";
-import { FaThermometerHalf, FaTachometerAlt, FaWater, FaRulerVertical, FaRobot } from "react-icons/fa";
+import { FaThermometerHalf, FaTachometerAlt, FaWater, FaRulerVertical } from "react-icons/fa";
 
+// Mapeo de iconos según "name" o "topic"
 const SENSOR_ICONS = {
-  proximidad: <FaRulerVertical size={24} className="text-sensor-proximidad" />,
-  nivel: <FaWater size={24} className="text-sensor-nivel" />,
-  temperatura: <FaThermometerHalf size={24} className="text-sensor-temperatura" />,
-  uso: <FaTachometerAlt size={24} className="text-sensor-uso" />,
+  temperatura: (color) => <FaThermometerHalf size={24} style={{ color }} />,
+  uso: (color) => <FaTachometerAlt size={24} style={{ color }} />,
+  nivel: (color) => <FaWater size={24} style={{ color }} />,
+  proximidad: (color) => <FaRulerVertical size={24} style={{ color }} />,
 };
 
-const ROOMS = ["proximidad", "nivel", "temperatura", "uso"];
-
 export default function Dashboard() {
-  const [sensorData, setSensorData] = useState(() => {
-    const initial = {};
-    ROOMS.forEach((room) => (initial[room] = []));
-    return initial;
-  });
+  const [sensors, setSensors] = useState([]);   // lista de sensores desde DB
+  const [sensorData, setSensorData] = useState({}); // series de tiempo
   const wsRef = useRef(null);
+  // 1. Pedir metadata de sensores
+  useEffect(() => {
+    fetch("http://localhost:3001/api/sensors")
+      .then((res) => res.json())
+      .then((data) => {
+        setSensors(data);
+        // inicializar estructura para cada sensor
+        const init = {};
+        data.forEach((s) => (init[s.id] = []));
+        setSensorData(init);
+      })
+      .catch((err) => console.error("Error cargando sensores:", err));
+  }, []);
 
+  // 2. Conectar WebSocket y recibir datos
   useEffect(() => {
     wsRef.current = createWSClient({
       url: "ws://localhost:3001",
-      onOpen: () => console.log("WebSocket abierto"),
       onMessage: (event) => {
         try {
           const data = JSON.parse(event.data);
-          const { room, time, value } = data;
+          const { id, value, time } = data;
 
           setSensorData((prev) => {
-            const existing = prev[room] || [];
+            const existing = prev[id] || [];
             return {
               ...prev,
-              [room]: [
-                ...existing.slice(-99),
+              [id]: [
+                ...existing.slice(-50), // mantener solo los últimos 50 y agregar el nuevo para tener 51
                 { time: Date.parse(time) / 1000, value },
               ],
             };
           });
         } catch (e) {
-          console.error("Error al parsear mensaje:", e);
+          console.error("Error parseando mensaje WS:", e);
         }
       },
-      onError: (err) => console.error("WebSocket error:", err),
-      onClose: (e) => console.warn("WebSocket cerrado:", e),
     });
 
-    return () => {
-      if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-        wsRef.current.close();
-      }
-    };
+    return () => wsRef.current?.close();
   }, []);
 
+  // 3. Cargar datos históricos
+  useEffect(() => {
+    if (sensors.length === 0) return;
+    sensors.forEach((sensor) => {
+      fetch(`http://localhost:3001/api/sensors/${sensor.id}/data?range=day`)
+        .then((res) => res.json())
+        .then((historical) => {
+          setSensorData((prev) => ({
+            ...prev,
+            [sensor.id]: historical.slice(-10),
+          }));
+        })
+        .catch((err) => console.error(`Error cargando datos históricos para sensor ${sensor.id}:`, err));
+    });
+  }, [sensors]);
+
+  // 4. Render
   return (
+    
     <div className="p-6 bg-white min-h-screen">
-      <div className="mb-6">
-        <h1 className="text-4xl font-extrabold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent flex items-center gap-2">
-           Panel de Sensores
-        </h1>
-        <p className="text-gray-500 text-sm">
-          Monitoreo en tiempo real de todos los sensores activos en el sistema IoT.
-        </p>
-      </div>
-
       <div className="grid grid-cols-4 gap-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 col-span-3">
-          {Object.keys(sensorData).map((room) => {
-            const data = sensorData[room] || [];
-            const lastValue = data.length ? data[data.length - 1].value : "--";
-
-            return (
-              <div
-                key={room}
-                style={{ borderColor: getSensorColor(room + "_light") }}
-                className="rounded-xl shadow-lg bg-white p-6 border-2 hover:shadow-2xl transition-shadow duration-300"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2">
-                    {SENSOR_ICONS[room]}
-                    <h3 className="text-xl font-semibold">{room.toUpperCase()}</h3>
-                  </div>
-                  <span 
-                  style={{ backgroundColor: getSensorColor(room + "_light") }}
-                  className="px-3 py-1 text-sm font-medium rounded-full text-gray-700">
-                    Ultimo valor {lastValue}
-                  </span>
-                </div>
-
-                <SensorChart
-                  data={data}
-                  title={`Sensor: ${room}`}
-                  color={getSensorColor(room)}
-                  width="100%"
-                  height={150}
-                />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 lg:col-span-3 md:col-span-4 sm:col-span-4">
+        {sensors.map((sensor) => {
+          const data = sensorData[sensor.id] || [];
+          const lastValue = data.length ? data[data.length - 1].value : "--";
+          return (
+            <div
+              key={sensor.id}
+              style={{ borderColor: sensor.color }}
+              className="rounded-xl shadow-lg bg-white p-6 border-2"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                {SENSOR_ICONS[sensor.topic.toLowerCase().split("/")[1]]
+                  ? SENSOR_ICONS[sensor.topic.toLowerCase().split("/")[1]](sensor.color)
+                  : null}
+                <h3 className="text-xl font-semibold">{sensor.name}</h3>
               </div>
-            );
-          })}
+                <span
+                  style={{ backgroundColor: sensor.color }}
+                  className="px-3 py-1 text-sm font-medium rounded-full text-white"
+                >
+                  Último valor: {lastValue} {sensor.unit}
+                </span>
+              </div>
+
+              <SensorChart
+                data={data}
+                title={`${sensor.name}`}
+                color={sensor.color}
+                width="100%"
+                height={150}
+                unit={sensor.unit}
+              />
+            </div>
+          );
+        })}
+      </div>
+      <div className="lg:col-span-1 space-y-4 md:col-span-4 sm:col-span-4"> 
+        <div className="bg-white shadow p-6 rounded-xl flex flex-col gap-4">
+          <h2 className="text-lg font-semibold">Resumen</h2>
+          <p className="text-sm text-gray-600">{sensors.length} sensores activos</p>
+          <Link
+            to="/sensors"
+            className="px-4 py-2 text-sm font-semibold rounded-lg bg-primary text-white hover:bg-secondary transition"
+          >
+            Ver Sensores
+          </Link>
         </div>
-        <div className="col-span-1 space-y-4">
-          <div className="bg-white shadow p-4 rounded-xl">
-            <h2 className="text-lg font-semibold">Resumen</h2>
-            <p className="text-sm text-gray-600">4 sensores activos</p>
-          </div>
-          <div className="bg-white shadow p-4 rounded-xl">
-            <h2 className="text-lg font-semibold">Tendencias</h2>
-            {/* Mini-gráfica */}
-          </div>
-          <div className="bg-white shadow p-4 rounded-xl">
-            <h2 className="text-lg font-semibold">Últimas alertas</h2>
-            <ul className="text-sm">
-              <li>Temperatura alta</li>
-              <li>Bajo nivel de agua</li>
-            </ul>
-          </div>
+          <div className="bg-white shadow p-4 rounded-xl"> 
+            <h2 className="text-lg font-semibold">Tendencias</h2> {/* Mini-gráfica */} 
+          </div> 
+          <div className="bg-white shadow p-4 rounded-xl"> 
+            <h2 className="text-lg font-semibold">Últimas alertas</h2> 
+            <ul className="text-sm"> 
+              <li>Temperatura alta</li> 
+              <li>Bajo nivel de agua</li> 
+            </ul> 
+          </div> 
         </div>
       </div>
       
     </div>
   );
-}
-
-function getSensorColor(room) {
-  const colors = {
-    proximidad: "#8C0060",      
-    proximidad_light: "#D98CBF",
-    nivel: "#005D80",           
-    nivel_light: "#66B5CC",
-    temperatura: "#FF9149",     
-    temperatura_light: "#FFD1B0",
-    uso: "#4CAF50",
-    uso_light: "#A8E6A9",
-    default: "#8884d8",
-  };
-  return colors[room] || colors.default;
 }

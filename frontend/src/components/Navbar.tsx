@@ -8,7 +8,9 @@ import {
   FaBell,
   FaRobot,
 } from "react-icons/fa";
+import { BiSolidReport } from "react-icons/bi";
 import { RiSensorFill } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const NAV_ITEMS = [
   { label: "Inicio", icon: <FaHome />, path: "/" },
@@ -16,6 +18,7 @@ const NAV_ITEMS = [
   { label: "Sensores", icon: <RiSensorFill />, path: "/sensors" },
   { label: "Alertas", icon: <FaBell />, path: "/alerts" },
   { label: "Configuración", icon: <FaCog />, path: "/settings" },
+  { label: "Informes", icon: <BiSolidReport />, path: "/reports" },
 ];
 
 export default function NavBar() {
@@ -26,14 +29,17 @@ export default function NavBar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo / Título */}
-          <span className="font-extrabold text-2xl font-serif tracking-wide bg-gradient-to-r to-white via-accent from-gray-400 bg-clip-text text-transparent flex">
+          <Link
+            to="/"
+            className="font-extrabold text-2xl font-serif tracking-wide bg-gradient-to-r to-white via-accent from-gray-400 bg-clip-text text-transparent flex items-center gap-2 cursor-pointer hover:underline"
+          >
             <img
               src="/logo.png"
               alt="Logo"
               className="h-8 w-8 rounded-full object-cover"
             />
             IoT Dashboard
-          </span>
+          </Link>
 
           {/* Botón de menú */}
           <button
@@ -48,7 +54,7 @@ export default function NavBar() {
       </div>
 
       {/* Menú desplegable */}
-      <MegaMenu isOpen={isOpen} routes={NAV_ITEMS} />
+      <MegaMenu isOpen={isOpen} routes={NAV_ITEMS} closeMenu={() => setIsOpen(false)} />
     </nav>
   );
 }

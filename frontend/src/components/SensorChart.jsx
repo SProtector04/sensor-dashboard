@@ -14,6 +14,7 @@ export default function SensorChart({
   color,
   width = "100%",
   height = 300,
+  unit  
 }) {
   // Formatear el eje X como hora legible si el dato es timestamp
   const formatTime = (unix) => {
@@ -37,10 +38,10 @@ export default function SensorChart({
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="time" tickFormatter={formatTime} />
-          <YAxis domain={["auto", "auto"]} unit="°C" />
+          <YAxis domain={["auto", "auto"]} unit={unit} />
           <Tooltip
             labelFormatter={formatTime}
-            formatter={(value) => `${value}°C`}
+            formatter={(value) => `${value}${unit}`}
           />
           <Line
             type="monotone"
