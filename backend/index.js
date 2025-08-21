@@ -14,7 +14,7 @@ const cors = require("cors");
 
 app.use(cors({
   origin: "http://localhost:5173",
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST", "DELETE", "PUT"],
   allowedHeaders: ["Content-Type"],
 }));
 
@@ -136,9 +136,8 @@ async function loadSensors() {
   initMqtt(topics, async (topic, message) => {
     const payload = message.toString();
     const rawValue = parseFloat(payload);
-    const value = rawValue === 0 ? null : rawValue;
-
-    if (value === null || isNaN(value)) return;
+    const value = isNaN(rawValue) ? null : rawValue;
+    if (value === null) return;
 
     try {
       const sensor = await pool.query(

@@ -1,16 +1,29 @@
 @startuml Architecture
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
 Person(admin, "Administrador")
+
 System_Boundary(sistema, "Sistema IoT") {
   Container(sensor, "Sensores", "Hardware", "Capturan datos")
-  Container(broker, "MQTT Broker", "Mosquitto", "Comunicación IoT")
-  Container(api, "API Backend", "Node.js", "Procesa datos y aplica ML")
-  ContainerDb(db, "InfluxDB", "Time-series DB", "Almacena lecturas")
+  Container(broker, "MQTT Broker", "Mosquitto", "Comunicacion IoT")
+  Container(api, "API Backend", "Node.js", "Procesa datos y logica de negocio")
   Container(ui, "Dashboard", "React", "Visualiza metricas y predicciones")
+
+  ' Bases de datos en la "fila de abajo"
+  ContainerDb(db1, "InfluxDB", "Time-series DB", "Almacena lecturas")
+  ContainerDb(db2, "PostgreSQL", "Relational DB", "Gestion de usuarios y reportes")
 }
+
 admin -> ui : Consulta metricas
 sensor -> broker : Publica datos
 broker -> api : Envia datos MQTT
-api -> db : Guarda lecturas
+api <-> db1 : Guarda lecturas
+api <-> db2 : Persiste datos estructurados
 api -> ui : WebSocket para datos en tiempo real
+ui -> api : Solicita y gestiona metadatos
+
+' Forzamos que las bases de datos vayan debajo
+Lay_Down(api, db1)
+Lay_Down(api, db2)
+
 @enduml

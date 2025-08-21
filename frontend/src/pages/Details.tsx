@@ -84,7 +84,7 @@ export default function SensorDetailPage() {
   return (
     <div className="p-8 min-h-screen bg-background relative">
       <button
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/sensors")}
         className="absolute top-8 left-8 p-2 rounded-full bg-white shadow hover:bg-blue-50 transition"
         title="Volver"
       >

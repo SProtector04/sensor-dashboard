@@ -8,6 +8,7 @@ import ConfigPage from "./pages/Config";
 import SensorsPage from "./pages/SensorsPage";
 import SensorDetailPage from "./pages/Details";
 import NewSensorPage from "./pages/NewSensorPage";
+import SensorEditPage from "./pages/SensorEditPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/simulation" element={<Simulation />} />
             <Route path="/sensors" element={<SensorsPage />} />
             <Route path="/sensors/:id" element={<SensorDetailPage />} />
+            <Route path="/sensors/:id/edit" element={<SensorEditPage />} />
             <Route path="/sensors/new" element={<NewSensorPage />} />
             <Route path="/settings" element={<ConfigPage />} />
           </Routes>
