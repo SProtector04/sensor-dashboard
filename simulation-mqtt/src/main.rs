@@ -8,10 +8,10 @@ use tokio::time::sleep;
 async fn main() {
     // Lista de topics
     let topics = vec![
-        "sensor/proximidad",
+        "sensor/humedad",
         "sensor/nivel",
-        "motor/temperatura",
-        "motor/uso",
+        "sensor/temperatura",
+        "sensor/servo",
     ];
 
     let broker = "localhost";
